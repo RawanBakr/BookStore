@@ -15,6 +15,7 @@ using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
 using BookStore.Books;
+using BookStore.Authors;
 
 namespace BookStore.EntityFrameworkCore;
 
@@ -28,6 +29,7 @@ public class BookStoreDbContext :
 {
     /* Add DbSet properties for your Aggregate Roots / Entities here. */
     public DbSet<Book> Books { get; set; }
+    public DbSet<Author> Authors { get; set; }
 
 
     #region Entities from the modules
@@ -83,12 +85,7 @@ public class BookStoreDbContext :
         
         /* Configure your own tables/entities inside here */
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(BookStoreConsts.DbTablePrefix + "YourEntities", BookStoreConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+    
 
         builder.Entity<Book>(x =>
         {
@@ -96,5 +93,18 @@ public class BookStoreDbContext :
             x.ConfigureByConvention();                   //Always use it for all your entities.
             x.Property(x=>x.Name).IsRequired().HasMaxLength(100);
         });
+
+        builder.Entity<Author>(a =>
+        {
+            a.ConfigureByConvention();
+
+            a.Property(x => x.Name)
+            .IsRequired()
+            .HasMaxLength(AuthorConsts.MaxNameLength);
+
+            a.HasIndex(x => x.Name);
+        }
+        );
+
     }
 }

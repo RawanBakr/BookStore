@@ -1,4 +1,5 @@
 using AutoMapper;
+using BookStore.Authors;
 using BookStore.Books;
 using JetBrains.Annotations;
 
@@ -12,8 +13,10 @@ public class BookStoreApplicationAutoMapperProfile : Profile
         CreateMap<Book, BookDto>();
         CreateMap<CreateUpdateBookDto, Book>();
 
-        //CreateMap<BookDto, CreateUpdateBookDto>();
+        CreateMap<Author, AuthorDto>();
 
+
+        //CreateMap<BookDto, CreateUpdateBookDto>();
         /* You can configure your AutoMapper mapping configuration here.
          * Alternatively, you can split your mapping configurations
          * into multiple profile classes for a better organization. */
